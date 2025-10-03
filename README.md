@@ -83,6 +83,134 @@ parquet_writer.write_to_parquet(results, 'output.parquet')
 mysql_conn.close()
 ```
 
+## Integration Examples
+
+The library includes comprehensive integration examples that demonstrate real-world usage patterns with the test database. These examples show how to connect to MySQL, execute various types of queries, and export results to organized Parquet files.
+
+### Prerequisites for Examples
+
+Before running the integration examples, ensure you have:
+
+1. **MySQL Server**: Running locally with the test database set up (see [Step-by-Step Database Setup](#step-by-step-database-setup))
+2. **Test Database**: Database `testdb` with user `testuser` and sample data
+3. **Python Dependencies**: All requirements installed (`pip install -r requirements.txt`)
+
+### Basic Integration Example
+
+**File**: `examples/basic_integration_example.py`
+
+**Purpose**: Demonstrates fundamental library usage patterns with simple queries and exports.
+
+**What it does**:
+- Connects to the test MySQL database
+- Executes simple SELECT queries  
+- Exports data to Parquet files in a `parquetFiles/` directory
+- Shows proper connection management and error handling
+
+**Usage**:
+```bash
+# From the project root directory
+python examples/basic_integration_example.py
+```
+
+**Generated Files**:
+- `parquetFiles/users.parquet` - All user records
+- `parquetFiles/orders.parquet` - All order records
+- `parquetFiles/high_value_customers.parquet` - Users with orders > $100
+
+### Advanced Integration Example
+
+**File**: `examples/advanced_integration_example.py`
+
+**Purpose**: Showcases complex analytics and business intelligence scenarios.
+
+**What it does**:
+- Validates database connectivity before processing
+- Executes complex analytical queries (JOINs, aggregations, window functions)
+- Creates timestamped export directories for organized data management
+- Generates comprehensive business analytics reports
+- Provides detailed success/failure reporting
+
+**Usage**:
+```bash
+# From the project root directory
+python examples/advanced_integration_example.py
+```
+
+**Generated Analytics Files**:
+- `user_order_summary.parquet` - Customer purchase behavior analysis
+- `product_performance.parquet` - Product sales and revenue metrics
+- `age_demographic_analysis.parquet` - Customer demographic insights  
+- `high_value_transactions.parquet` - Premium order analysis with rankings
+- `customer_lifetime_value.parquet` - Customer segmentation and LTV analysis
+- `export_summary.parquet` - Processing metadata and success metrics
+
+### Expected Output Structure
+
+After running the examples, you'll have the following directory structure:
+
+```
+mysql-parquet-lib/
+├── parquetFiles/
+│   ├── users.parquet                    # Basic example output
+│   ├── orders.parquet
+│   ├── high_value_customers.parquet
+│   └── advanced_export_YYYYMMDD_HHMMSS/ # Advanced example output
+│       ├── user_order_summary.parquet
+│       ├── product_performance.parquet
+│       ├── age_demographic_analysis.parquet
+│       ├── high_value_transactions.parquet
+│       ├── customer_lifetime_value.parquet
+│       └── export_summary.parquet
+```
+
+### Using the Generated Parquet Files
+
+The exported Parquet files can be analyzed with various tools:
+
+**With Pandas**:
+```python
+import pandas as pd
+
+# Load exported data
+users_df = pd.read_parquet('parquetFiles/users.parquet')
+orders_df = pd.read_parquet('parquetFiles/orders.parquet')
+
+# Analyze the data
+print(users_df.info())
+print(orders_df.describe())
+```
+
+**With DuckDB (SQL Analytics)**:
+```python
+import duckdb
+
+# Query parquet files directly with SQL
+conn = duckdb.connect()
+result = conn.execute("""
+    SELECT * FROM 'parquetFiles/advanced_export_*/user_order_summary.parquet'
+    WHERE total_spent > 500
+    ORDER BY total_spent DESC
+""").fetchall()
+```
+
+### Troubleshooting Examples
+
+**Database Connection Issues**:
+- Verify MySQL is running: `brew services list | grep mysql`
+- Test connection: `mysql -h localhost -u testuser -p testdb`
+- Check that test tables exist and have data
+
+**Import Path Issues**:
+- Always run examples from the project root directory
+- Ensure the project structure is intact
+
+**Permission Errors**:
+- Verify `testuser` has proper privileges on `testdb`
+- Check that the `parquetFiles/` directory can be created
+
+For detailed examples documentation, see [`examples/README.md`](examples/README.md).
+
 ## Running Tests
 
 This project includes comprehensive unit tests with proper typing. 

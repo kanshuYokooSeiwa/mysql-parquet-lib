@@ -30,13 +30,88 @@ class ExampleClass:
 - **Query Execution**: `QueryExecutor` class returning `List[Tuple[Any, ...]]`
 - **Data Export**: `ParquetWriter` class for converting to Parquet format
 
+### Project Structure Enhanced
+```
+mysql-parquet-lib/
+├── README.md                              # Main project documentation
+├── CLAUDE.md                              # Development guidelines
+├── requirements.txt                       # Python dependencies
+├── setup.py                               # Package configuration
+├── config/                               # Configuration modules
+│   ├── __init__.py
+│   └── database_config.py                # DatabaseConfig class
+├── src/                                  # Source code modules
+│   ├── __init__.py
+│   ├── database/
+│   │   ├── __init__.py
+│   │   └── mysql_connection.py           # MySQLConnection class
+│   ├── export/
+│   │   ├── __init__.py
+│   │   └── parquet_writer.py             # ParquetWriter class
+│   └── query/
+│       ├── __init__.py
+│       └── query_executor.py             # QueryExecutor class
+├── tests/                                # Test suite
+│   ├── __init__.py
+│   ├── test_database_config.py           # Mock-based unit tests
+│   ├── test_mysql_connection.py          # Mock-based unit tests
+│   ├── test_query_executor.py            # Mock-based unit tests
+│   ├── test_query_executor_realDB.py     # Real database integration tests
+│   └── test_parquet_writer.py            # Mock-based unit tests
+├── examples/                             # Integration examples ✨ NEW
+│   ├── README.md                         # Examples documentation
+│   ├── basic_integration_example.py      # Basic usage patterns
+│   └── advanced_integration_example.py   # Advanced analytics scenarios
+├── parquetFiles/                         # Generated parquet exports ✨ NEW
+│   ├── users.parquet                     # Basic example output
+│   ├── orders.parquet                    # Basic example output
+│   ├── high_value_customers.parquet      # Basic example output
+│   └── advanced_export_YYYYMMDD_HHMMSS/  # Timestamped advanced exports
+│       ├── user_order_summary.parquet    # Customer behavior analytics
+│       ├── product_performance.parquet   # Sales metrics
+│       ├── age_demographic_analysis.parquet # Demographics
+│       ├── high_value_transactions.parquet # Premium orders
+│       ├── customer_lifetime_value.parquet # LTV analysis
+│       └── export_summary.parquet        # Processing metadata
+└── htmlcov/                              # Coverage reports
+    └── (coverage HTML files)
+```
+
+### Integration Examples Usage
+
+The project now includes comprehensive integration examples demonstrating real-world usage:
+
+**Basic Integration Example**:
+```bash
+# Run basic MySQL to Parquet export example
+python examples/basic_integration_example.py
+```
+- Connects to testdb with testuser
+- Exports users, orders, and high-value customers to parquetFiles/
+- Demonstrates fundamental library usage patterns
+
+**Advanced Integration Example**:
+```bash
+# Run advanced analytics and business intelligence example  
+python examples/advanced_integration_example.py
+```
+- Executes complex analytical queries (JOINs, aggregations, window functions)
+- Creates timestamped export directories
+- Generates comprehensive business analytics reports
+- Provides detailed success/failure reporting
+
+**Generated Output Structure**:
+- Basic exports saved in `parquetFiles/` 
+- Advanced exports in timestamped directories: `parquetFiles/advanced_export_YYYYMMDD_HHMMSS/`
+- All examples follow strict typing conventions and proper error handling
+
 ### Development Status
 - [x] Database configuration structure defined
 - [x] MySQL connection class with proper typing
 - [x] Query executor with type safety
 - [x] Parquet writer with type annotations
 - [x] Unit tests with type hints
-- [ ] Integration examples
+- [x] Integration examples with real database
 - [ ] Error handling enhancement
 ### Prerequisites and Testing Notes
 - **MySQL Installation Required**: MySQL must be installed locally to run tests or develop with this library. See README for installation instructions (Homebrew, apt, Docker, etc).
