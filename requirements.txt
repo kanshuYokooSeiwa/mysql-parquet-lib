@@ -1,2 +1,3 @@
-mysql-connector-python
-pyarrow
+mysql-connector-python>=8.0.33
+pandas>=2.0.0
+pyarrow>=12.0.0
