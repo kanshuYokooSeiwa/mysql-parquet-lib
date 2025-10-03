@@ -1,10 +1,13 @@
-class QueryExecutor:
-    def __init__(self, connection):
-        self.connection = connection
+from typing import List, Tuple, Any
+from mysql.connector import MySQLConnection
 
-    def execute_query(self, query):
+class QueryExecutor:
+    def __init__(self, connection: MySQLConnection) -> None:
+        self.connection: MySQLConnection = connection
+
+    def execute_query(self, query: str) -> List[Tuple[Any, ...]]:
         cursor = self.connection.cursor()
         cursor.execute(query)
-        results = cursor.fetchall()
+        results: List[Tuple[Any, ...]] = cursor.fetchall()
         cursor.close()
         return results
