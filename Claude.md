@@ -35,9 +35,21 @@ class ExampleClass:
 - [x] MySQL connection class with proper typing
 - [x] Query executor with type safety
 - [x] Parquet writer with type annotations
-- [ ] Unit tests with type hints
+- [x] Unit tests with type hints
 - [ ] Integration examples
 - [ ] Error handling enhancement
+### Prerequisites and Testing Notes
+- **MySQL Installation Required**: MySQL must be installed locally to run tests or develop with this library. See README for installation instructions (Homebrew, apt, Docker, etc).
+- **Connection Information**: You must have valid credentials (host, user, password, database name) to connect to any MySQL server. For remote servers, ensure your computer is allowed to connect (firewall, network access).
+- **Test Database Setup**: Most unit tests use mocking and do not require a real database. If you want to run integration tests, set up a test database and user with appropriate privileges. Example credentials used in tests:
+    - Host: `localhost`
+    - User: `testuser`
+    - Password: `testpass`
+    - Database: `testdb`
+- **Connection Verification**: Always verify your connection using a MySQL client before using this library:
+    ```bash
+    mysql -h your_host -u your_username -p your_database
+    ```
 
 ### Next Steps
 1. Create comprehensive unit tests with proper typing
